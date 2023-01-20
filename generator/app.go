@@ -20,6 +20,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -36,7 +37,12 @@ import (
 
 	"github.com/google/go-github/v32/github"
 
+	"github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/plumbing"
+	"github.com/go-git/go-git/v5/storage/memory"
+
 	yaml "gopkg.in/yaml.v3"
+	"strconv"
 )
 
 const (
@@ -68,21 +74,16 @@ const (
 )
 
 var (
-	baseGeneratorDir = ""
-	templateDir      = "generator"
-	releases         = Releases{}
-	cachedKEPs       = []api.Proposal{}
+	baseGeneratorDir           = ""
+	templateDir                = "generator"
+	releases                   = Releases{}
+	cachedKEPs                 = []api.Proposal{}
+	repo                       = &git.Repository{}
+	annualReportYear           = time.Time{}
+	newYear                    = time.Time{}
+	commitFromAnnualReportYear = &plumbing.Hash{}
+	commitFromNewYear          = &plumbing.Hash{}
 )
-
-// KEP represents an individual KEP holding its metadata information.
-type KEP struct {
-	Name            string `json:"name"`
-	Title           string `json:"title"`
-	KepNumber       string `json:"kepNumber"`
-	OwningSig       string `json:"owningSig"`
-	Stage           string `json:"stage"`
-	LatestMilestone string `json:"latestMilestone"`
-}
 
 type Releases struct {
 	Latest         string
@@ -524,16 +525,17 @@ func getExistingContent(path string, fileFormat string) (string, error) {
 }
 
 var funcMap = template.FuncMap{
-	"tzUrlEncode": tzURLEncode,
-	"trimSpace":   strings.TrimSpace,
-	"trimSuffix":  strings.TrimSuffix,
-	"githubURL":   githubURL,
-	"orgRepoPath": orgRepoPath,
-	"now":         time.Now,
-	"lastYear":    lastYear,
-	"toUpper":     strings.ToUpper,
-	"filterKEPs":  filterKEPs,
-	"getReleases": getReleases,
+	"tzUrlEncode":                 tzURLEncode,
+	"trimSpace":                   strings.TrimSpace,
+	"trimSuffix":                  strings.TrimSuffix,
+	"githubURL":                   githubURL,
+	"orgRepoPath":                 orgRepoPath,
+	"now":                         time.Now,
+	"lastYear":                    lastYear,
+	"toUpper":                     strings.ToUpper,
+	"filterKEPs":                  filterKEPs,
+	"getReleases":                 getReleases,
+	"getCategorizedSubprojects":   getCategorizedSubprojects,
 }
 
 // lastYear returns the last year as a string
@@ -784,10 +786,175 @@ func writeYaml(data interface{}, path string) error {
 	return enc.Encode(data)
 }
 
+func getCommitByDate(repo *git.Repository, date time.Time) (*plumbing.Hash, error) {
+	// Get the commit iterator
+	iterator, err := repo.Log(&git.LogOptions{Order: git.LogOrderCommitterTime})
+	if err != nil {
+		return nil, err
+	}
+
+	// Iterate through the commits
+	var commit *plumbing.Hash
+	for {
+		// Get the next commit
+		c, err := iterator.Next()
+		if err != nil {
+			if err == io.EOF {
+				break
+			}
+			return nil, err
+		}
+
+		// Check if the commit date is less than or equal to the specified date
+		if c.Committer.When.Before(date) || c.Committer.When.Equal(date) {
+			commit = &c.Hash
+			break
+		}
+	}
+
+	return commit, nil
+}
+
+// Function to get the file from a commit
+func getFileFromCommit(repo *git.Repository, commit *plumbing.Hash, filename string) ([]byte, error) {
+	// Get the commit object
+	obj, err := repo.CommitObject(*commit)
+	if err != nil {
+		return nil, err
+	}
+
+	// Get the commit tree
+	tree, err := obj.Tree()
+	if err != nil {
+		return nil, err
+	}
+
+	// Get the file from the tree
+	entry, err := tree.FindEntry(filename)
+	if err != nil {
+		return nil, err
+	}
+
+	// Get the file content
+	file, err := repo.BlobObject(entry.Hash)
+	if err != nil {
+		return nil, err
+	}
+
+	reader, err := file.Reader()
+	if err != nil {
+		return nil, err
+	}
+	defer reader.Close()
+
+	content, err := ioutil.ReadAll(reader)
+	if err != nil {
+		return nil, err
+	}
+
+	return content, nil
+}
+
+func contains(s []string, e string) bool {
+	for _, a := range s {
+		if a == e {
+			return true
+		}
+	}
+	return false
+}
+
+func getCategorizedSubprojects(dir string) (map[string][]string, error) {
+	annualYearSigFile, err := getFileFromCommit(repo, commitFromAnnualReportYear, sigsYamlFile)
+	if err != nil {
+		return nil, err
+	}
+
+	newYearSigFile, err := getFileFromCommit(repo, commitFromNewYear, sigsYamlFile)
+	if err != nil {
+		return nil, err
+	}
+	var annualYearSigs, newYearSigs Context
+	err = yaml.Unmarshal([]byte(annualYearSigFile), &annualYearSigs)
+	if err != nil {
+		return nil, err
+	}
+	err = yaml.Unmarshal([]byte(newYearSigFile), &newYearSigs)
+	if err != nil {
+		return nil, err
+	}
+
+	subprojectsMap := make(map[string][]string)
+
+	// create a set for the subprojects in the annual year
+	annualSubprojects := make(map[string]bool)
+	for _, sig1 := range annualYearSigs.Sigs {
+		if sig1.Dir != dir {
+			continue
+		}
+		for _, sub1 := range sig1.Subprojects {
+			annualSubprojects[sub1.Name] = true
+		}
+	}
+
+	// iterate over sigs from the new year
+	for _, sig2 := range newYearSigs.Sigs {
+		if sig2.Dir != dir {
+			continue
+		}
+		// iterate over subprojects under the sig
+		for _, sub2 := range sig2.Subprojects {
+			// check if the subproject is already in the annual year set
+			if annualSubprojects[sub2.Name] {
+				// if yes, move it to the continuing category
+				subprojectsMap["Continuing"] = append(subprojectsMap["Continuing"], sub2.Name)
+				// remove it from the annual year set
+				delete(annualSubprojects, sub2.Name)
+			} else {
+				// if not, add it to the new category
+				subprojectsMap["New"] = append(subprojectsMap["New"], sub2.Name)
+			}
+		}
+	}
+
+	// add the remaining subprojects in the annual year set to the retired category
+	for sub := range annualSubprojects {
+		subprojectsMap["Retired"] = append(subprojectsMap["Retired"], sub)
+	}
+
+	return subprojectsMap, nil
+}
+
 func main() {
+	intLastYear, err := strconv.Atoi(lastYear())
+	if err != nil {
+		log.Fatal(err)
+	}
+	annualReportYear = time.Date(intLastYear, time.January, 1, 0, 0, 0, 0, time.UTC)
+	newYear = time.Date(intLastYear+1, time.January, 1, 0, 0, 0, 0, time.UTC)
+
+	// Clone the repository
+	repo, err = git.Clone(memory.NewStorage(), nil, &git.CloneOptions{
+		URL: "https://github.com/kubernetes/community.git",
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	commitFromAnnualReportYear, err = getCommitByDate(repo, annualReportYear)
+	fmt.Println(commitFromAnnualReportYear)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	commitFromNewYear, err = getCommitByDate(repo, newYear)
+	fmt.Println(commitFromNewYear)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// Fetch KEPs and cache them in the keps variable
-	err := fetchKEPs()
+	err = fetchKEPs()
 	if err != nil {
 		log.Fatal(err)
 	}

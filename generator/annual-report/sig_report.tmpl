@@ -15,8 +15,8 @@
    -
 
 {{$releases := getReleases}}
-3. KEP work in {{lastYear}} (v{{$releases.Latest}}, v{{$releases.LatestMinusOne}}, v{{$releases.LatestMinusTwo}}):
 {{$owingsig := .Dir}}
+3. KEP work in {{lastYear}} (v{{$releases.Latest}}, v{{$releases.LatestMinusOne}}, v{{$releases.LatestMinusTwo}}):
 {{- range $stage, $keps := filterKEPs $owingsig $releases}}
   {{ $stage }}:
   {{- range $keps}}
@@ -71,26 +71,36 @@
 
 Include any other ways you measure group membership
 
-## Subprojects
+## [Subprojects](https://git.k8s.io/community/{{.Dir}}#subprojects)
 
-<!--
-In future, this will be generated from delta of sigs.yaml from $YYYY-01-01 to $YYYY-12-31
-Manually visible via `git diff HEAD@{$YYYY-01-01} HEAD@{$YYYY-12-31} -- $sig-id/README.md`
--->
+{{- define "subprojects" -}}
+{{- $owingsig := .Dir -}}
+{{- if .New}}
+New in {{lastYear}}:
+{{ range .New}}
+  - {{.}}
+{{ end}}
+{{- end}}
 
-New in $YYYY:
-- [$subproject-name](https://git.k8s.io/community/$sig-id#$subproject-name)
--
+{{- if .Retired}}
+Retired in {{lastYear}}:
+{{ range .Retired}}
+  - {{.}}
+{{ end}}
+{{- end}}
 
-Retired in $YYYY:
-- [$subproject-name](https://git.k8s.io/community/$sig-id#$subproject-name)
--
-
+{{- if .Continuing}}
 Continuing:
-- [$subproject-name](https://git.k8s.io/community/$sig-id#$subproject-name)
--
+{{ range .Continuing}}
+  - {{.}}
+{{ end}}
+{{- end}}
+{{end}}
 
-## Working groups
+{{template "subprojects" (getCategorizedSubprojects .Dir)}}
+
+
+## [Working groups](https://git.k8s.io/community/{{.Dir}}#working-groups)
 
 <!--
 In future, this will be generated from delta of sigs.yaml from $YYYY-01-01 to $YYYY-12-31
