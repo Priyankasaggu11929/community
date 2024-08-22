@@ -4,50 +4,51 @@
 
 1. What work did the SIG do this year that should be highlighted?
 
-    - Interactive delete in kubectl delete
-    - Custom profiling support in kubectl debug
-    - Transition from SPDY to Websockets
-    - Plugin resolution for non-shadowing subcommands in kubectl promoted to beta
-    - New pruning design for kubectl apply --prune, aka ApplySet
-    - Aggregated Discovery promoted to GA
-    - kubectl debug promoted to GA
-    - New minor release for kui
-    - Krew has 242 plugins
+<!--
+   Some example items that might be worth highlighting:
+   - Major KEP advancement
+   - Important initiatives that aren't tracked via KEPs
+   - Paying down significant tech debt
+   - Governance and leadership changes
+-->
 
 2. Are there any areas and/or subprojects that your group needs help with (e.g. fewer than 2 active OWNERS)?
 
-    - Lost 2 Kustomize primary maintainers and looking for help in 2024
 
 3. Did you have community-wide updates in 2023 (e.g. KubeCon talks)?
 
-  - [KubeCon Europe 2023](https://www.youtube.com/watch?v=X-XDr8XhHHU)
-  - [KubeCon North America 2023](https://www.youtube.com/watch?v=RggqaCSdOGA)
+<!--
+  Examples include links to email, slides, or recordings.
+-->
 
-4. KEP work in 2023 (v1.27, v1.28, v1.29):
+4. KEP work in 2023 (v1.28, v1.29, v1.30):
+<!--
+   TODO: Uncomment the following auto-generated list of KEPs, once reviewed & updated for correction.
 
+   Note: This list is generated from the KEP metadata in kubernetes/enhancements repository.
+      If you find any discrepancy in the generated list here, please check the KEP metadata.
+      Please raise an issue in kubernetes/community, if the KEP metadata is correct but the generated list is incorrect.
+-->
+
+<!-- 
   - Alpha
-    - [3659 - KEP Template](https://github.com/kubernetes/enhancements/tree/master/keps/sig-cli/3659-kubectl-apply-prune) - v1.27
-    - [3805 - Kubectl Server-Side Apply by default](https://github.com/kubernetes/enhancements/tree/master/keps/sig-cli/3805-ssa-default) - v1.27
-    - [4006 - Transition from SPDY to Websockets](https://github.com/kubernetes/enhancements/blob/master/keps/sig-api-machinery/4006-transition-spdy-to-websockets/kep.yaml) - 1.28
+    - [4292 - Custom profiling support in kubectl debug command](https://github.com/kubernetes/enhancements/tree/master/keps/sig-cli/4292-kubectl-debug-custom-profile) - v1.30
 
   - Beta
-    - [2590 - Kubectl Subresource Support](https://github.com/kubernetes/enhancements/tree/master/keps/sig-cli/2590-kubectl-subresource) - v1.27
-    - [3638 - Improve kubectl plugin resolution for non-shadowing subcommands](https://github.com/kubernetes/enhancements/tree/master/keps/sig-cli/3638-kubectl-plugin-subcommands) - v1.29
-    - [3895 - Interactive(-i) flag to kubectl delete for user confirmation](https://github.com/kubernetes/enhancements/tree/master/keps/sig-cli/3895-kubectl-delete-interactivity) - v1.29
+    - [3805 - Kubectl Server-Side Apply by default](https://github.com/kubernetes/enhancements/tree/master/keps/sig-cli/3805-ssa-default) - v1.30
 
   - Stable
     - [1440 - Kubectl events](https://github.com/kubernetes/enhancements/tree/master/keps/sig-cli/1440-kubectl-events) - v1.28
-    - [2227 - kubectl default container](https://github.com/kubernetes/enhancements/tree/master/keps/sig-cli/2227-kubectl-default-container) - v1.27
-    - [2906 - Kustomize Function Catalog](https://github.com/kubernetes/enhancements/tree/master/keps/sig-cli/2906-kustomize-function-catalog) - v1.27
-    - [3104 - Introduce kuberc](https://github.com/kubernetes/enhancements/tree/master/keps/sig-cli/3104-introduce-kuberc) - v1.28
+    - [1441 - kubectl debug](https://github.com/kubernetes/enhancements/tree/master/keps/sig-cli/1441-kubectl-debug) - v1.30
     - [3515 - Kubectl Explain OpenAPIv3](https://github.com/kubernetes/enhancements/tree/master/keps/sig-cli/3515-kubectl-explain-openapiv3) - 1.29
+    - [3638 - Improve kubectl plugin resolution for non-shadowing subcommands](https://github.com/kubernetes/enhancements/tree/master/keps/sig-cli/3638-kubectl-plugin-subcommands) - v1.30
+    - [3895 - Interactive(-i) flag to kubectl delete for user confirmation](https://github.com/kubernetes/enhancements/tree/master/keps/sig-cli/3895-kubectl-delete-interactivity) - v1.30 -->
 
 ## [Subprojects](https://git.k8s.io/community/sig-cli#subprojects)
 
 
 **New in 2023:**
-  - [kubectl-validate](https://git.k8s.io/community/sig-cli#kubectl-validate)
-
+  - [kubectl-validate](https://git.k8s.io/community/<no value>#kubectl-validate)
 **Continuing:**
   - cli-experimental
   - cli-sdk
@@ -65,12 +66,12 @@
 ## Operational
 
 Operational tasks in [sig-governance.md]:
-- [x] [README.md] reviewed for accuracy and updated if needed
-- [x] [CONTRIBUTING.md] reviewed for accuracy and updated if needed
-- [x] Other contributing docs (e.g. in devel dir or contributor guide) reviewed for accuracy and updated if needed
-- [x] Subprojects list and linked OWNERS files in [sigs.yaml] reviewed for accuracy and updated if needed
-- [x] SIG leaders (chairs, tech leads, and subproject leads) in [sigs.yaml] are accurate and active, and updated if needed
-- [x] Meeting notes and recordings for 2023 are linked from [README.md] and updated/uploaded if needed
+- [ ] [README.md] reviewed for accuracy and updated if needed
+- [ ] [CONTRIBUTING.md] reviewed for accuracy and updated if needed
+- [ ] Other contributing docs (e.g. in devel dir or contributor guide) reviewed for accuracy and updated if needed
+- [ ] Subprojects list and linked OWNERS files in [sigs.yaml] reviewed for accuracy and updated if needed
+- [ ] SIG leaders (chairs, tech leads, and subproject leads) in [sigs.yaml] are accurate and active, and updated if needed
+- [ ] Meeting notes and recordings for 2023 are linked from [README.md] and updated/uploaded if needed
 
 
 [CONTRIBUTING.md]: https://git.k8s.io/community/sig-cli/CONTRIBUTING.md

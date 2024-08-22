@@ -14,11 +14,6 @@
 
 2. Are there any areas and/or subprojects that your group needs help with (e.g. fewer than 2 active OWNERS)?
 
-<!--
-   Note: This list is generated from the KEP metadata in kubernetes/enhancements repository.
-      If you find any discrepancy in the generated list here, please check the KEP metadata.
-      Please raise an issue in kubernetes/community, if the KEP metadata is correct but the generated list is incorrect.
--->
 
 3. Did you have community-wide updates in 2023 (e.g. KubeCon talks)?
 
@@ -26,14 +21,22 @@
   Examples include links to email, slides, or recordings.
 -->
 
-4. KEP work in 2023 (v1.27, v1.28, v1.29):
+4. KEP work in 2023 (v1.28, v1.29, v1.30):
+<!--
+   TODO: Uncomment the following auto-generated list of KEPs, once reviewed & updated for correction.
 
+   Note: This list is generated from the KEP metadata in kubernetes/enhancements repository.
+      If you find any discrepancy in the generated list here, please check the KEP metadata.
+      Please raise an issue in kubernetes/community, if the KEP metadata is correct but the generated list is incorrect.
+-->
+
+<!-- 
   - Alpha
-    - [4322 - Inventory Cluster API](https://github.com/kubernetes/enhancements/tree/master/keps/sig-multicluster/4322-cluster-inventory) - v1.28
+    - [4322 - Cluster Profile API](https://github.com/kubernetes/enhancements/tree/master/keps/sig-multicluster/4322-cluster-inventory) - v1.28
 
   - Beta
     - [2149 - ClusterID for ClusterSet Identification](https://github.com/kubernetes/enhancements/tree/master/keps/sig-multicluster/2149-clusterid) - v1.28
-
+ -->
 
 ## [Subprojects](https://git.k8s.io/community/sig-multicluster#subprojects)
 

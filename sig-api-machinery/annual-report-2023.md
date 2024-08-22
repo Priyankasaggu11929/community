@@ -14,11 +14,6 @@
 
 2. Are there any areas and/or subprojects that your group needs help with (e.g. fewer than 2 active OWNERS)?
 
-<!--
-   Note: This list is generated from the KEP metadata in kubernetes/enhancements repository.
-      If you find any discrepancy in the generated list here, please check the KEP metadata.
-      Please raise an issue in kubernetes/community, if the KEP metadata is correct but the generated list is incorrect.
--->
 
 3. Did you have community-wide updates in 2023 (e.g. KubeCon talks)?
 
@@ -26,27 +21,38 @@
   Examples include links to email, slides, or recordings.
 -->
 
-4. KEP work in 2023 (v1.27, v1.28, v1.29):
+4. KEP work in 2023 (v1.28, v1.29, v1.30):
+<!--
+   TODO: Uncomment the following auto-generated list of KEPs, once reviewed & updated for correction.
 
+   Note: This list is generated from the KEP metadata in kubernetes/enhancements repository.
+      If you find any discrepancy in the generated list here, please check the KEP metadata.
+      Please raise an issue in kubernetes/community, if the KEP metadata is correct but the generated list is incorrect.
+-->
+
+<!-- 
   - Alpha
     - [2340 - Consistent Reads from Cache](https://github.com/kubernetes/enhancements/tree/master/keps/sig-api-machinery/2340-Consistent-reads-from-cache) - v1.28
-    - [3157 - Allow informers for getting a stream of data instead of chunking](https://github.com/kubernetes/enhancements/tree/master/keps/sig-api-machinery/3157-watch-list) - v1.27
+    - [3962 - Mutating Admission Policies](https://github.com/kubernetes/enhancements/tree/master/keps/sig-api-machinery/3962-mutating-admission-policies) - v1.30
     - [4006 - Transition from SPDY to Websockets](https://github.com/kubernetes/enhancements/tree/master/keps/sig-api-machinery/4006-transition-spdy-to-websockets) - v1.29
-    - [4008 - CRD Validation Ratcheting](https://github.com/kubernetes/enhancements/tree/master/keps/sig-api-machinery/4008-crd-ratcheting) - v1.28
     - [4153 - Declarative Validation](https://github.com/kubernetes/enhancements/tree/master/keps/sig-api-machinery/4153-declarative-validation) - v1.29
+    - [4192 - Move Storage Version Migrator in-tree](https://github.com/kubernetes/enhancements/tree/master/keps/sig-api-machinery/4192-svm-in-tree) - v1.30
+    - [4346 - Add Informer Metrics](https://github.com/kubernetes/enhancements/tree/master/keps/sig-api-machinery/4346-informer-metrics) - v1.30
+    - [4358 - Custom Resource Field Selectors](https://github.com/kubernetes/enhancements/tree/master/keps/sig-api-machinery/4358-custom-resource-field-selectors) - v1.30
+    - [4420 - Retry Generate Name](https://github.com/kubernetes/enhancements/tree/master/keps/sig-api-machinery/4420-retry-generate-name) - v1.30
 
   - Beta
-    - [3352 - Aggregated Discovery](https://github.com/kubernetes/enhancements/tree/master/keps/sig-api-machinery/3352-aggregated-discovery) - v1.27
-    - [3488 - CEL for Admission Control](https://github.com/kubernetes/enhancements/tree/master/keps/sig-api-machinery/3488-cel-admission-control) - 1.28
-    - [3716 - Admission Webhook Match Conditions](https://github.com/kubernetes/enhancements/tree/master/keps/sig-api-machinery/3716-admission-webhook-match-conditions) - v1.28
-    - [4020 - Unknown Version Interoperability Proxy](https://github.com/kubernetes/enhancements/tree/master/keps/sig-api-machinery/4020-unknown-version-interoperability-proxy) - v1.29
+    - [2339 - StorageVersion API for HA API servers](https://github.com/kubernetes/enhancements/tree/master/keps/sig-api-machinery/2339-storageversion-api-for-ha-api-servers) - v1.30
+    - [4008 - CRD Validation Ratcheting](https://github.com/kubernetes/enhancements/tree/master/keps/sig-api-machinery/4008-crd-ratcheting) - v1.30
 
   - Stable
     - [1040 - Priority and Fairness for API Server Requests](https://github.com/kubernetes/enhancements/tree/master/keps/sig-api-machinery/1040-priority-and-fairness) - v1.29
     - [2876 - CRD Validation Expression Language](https://github.com/kubernetes/enhancements/tree/master/keps/sig-api-machinery/2876-crd-validation-expression-language) - v1.29
-    - [2885 - Server Side Unknown Field Validation](https://github.com/kubernetes/enhancements/tree/master/keps/sig-api-machinery/2885-server-side-unknown-field-validation) - v1.27
-    - [2896 - OpenAPI V3](https://github.com/kubernetes/enhancements/tree/master/keps/sig-api-machinery/2896-openapi-v3) - v1.27
+    - [3352 - Aggregated Discovery](https://github.com/kubernetes/enhancements/tree/master/keps/sig-api-machinery/3352-aggregated-discovery) - v1.30
+    - [3488 - CEL for Admission Control](https://github.com/kubernetes/enhancements/tree/master/keps/sig-api-machinery/3488-cel-admission-control) - 1.30
     - [365 - Paginated API Lists](https://github.com/kubernetes/enhancements/tree/master/keps/sig-api-machinery/365-paginated-lists) - v1.29
+    - [3716 - Admission Webhook Match Conditions](https://github.com/kubernetes/enhancements/tree/master/keps/sig-api-machinery/3716-admission-webhook-match-conditions) - v1.30
+    - [4020 - Unknown Version Interoperability Proxy](https://github.com/kubernetes/enhancements/tree/master/keps/sig-api-machinery/4020-unknown-version-interoperability-proxy) - v1.30 -->
 
 ## [Subprojects](https://git.k8s.io/community/sig-api-machinery#subprojects)
 

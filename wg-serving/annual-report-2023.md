@@ -1,4 +1,4 @@
-# 2023 Annual Report: WG Batch
+# 2023 Annual Report: WG Serving
 
 ## Current initiatives and Project Health
 
@@ -30,5 +30,5 @@ Operational tasks in [wg-governance.md]:
       -
 
 [wg-governance.md]: https://git.k8s.io/community/committee-steering/governance/wg-governance.md
-[README.md]: https://git.k8s.io/community/wg-batch/README.md
+[README.md]: https://git.k8s.io/community/wg-serving/README.md
 [sigs.yaml]: https://git.k8s.io/community/sigs.yaml
